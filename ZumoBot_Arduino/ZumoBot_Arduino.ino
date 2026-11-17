@@ -28,7 +28,7 @@
 
 // HC-05 Bluetooth connection
 // Arduino pin 2 = RX
-// Arduino pin 4 = TX
+// Arduino pin 4 = TX (not physically connected)
 SoftwareSerial bluetooth(2, 4);
 
 // Zumo components
@@ -107,12 +107,12 @@ bool checkBoundary(){
   sensors.read(sensor_values);
 
   // Leftmost sensor detects boundary
-  if (sensor_values[0] > QTR_THRESHOLD){
+  if(sensor_values[0] > QTR_THRESHOLD){
     escapeBoundary(true);
     return true;
   }
   // Rightmost sensor detects boundary
-  else if (sensor_values[5] > QTR_THRESHOLD){
+  else if(sensor_values[5] > QTR_THRESHOLD){
     escapeBoundary(false);
     return true;
   }
@@ -123,7 +123,7 @@ bool checkBoundary(){
 
 // Perform the current movement command
 void moveRobot(){
-  switch (currentCommand){
+  switch(currentCommand){
     case 'F':
       motors.setSpeeds(FORWARD_SPEED, FORWARD_SPEED);
       break;
@@ -148,6 +148,7 @@ void moveRobot(){
 
 
 void setup(){
+  pinMode(LED, OUTPUT);
   Serial.begin(9600);
 
   // Start the HC-05 Bluetooth connection
