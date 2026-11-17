@@ -11,6 +11,8 @@
 #include <ZumoShield.h>
 #include <SoftwareSerial.h>
 
+#define LED 13
+
 // Boundary detection
 #define QTR_THRESHOLD  1500
 
