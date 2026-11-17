@@ -53,17 +53,17 @@ char readJoystick(){
     }
 
     // Left
-    if(!(joystick & (1 << PB4))){
+    if(!(joystick & (1 << PB2))){
         return 'L';
     }
 
     // Right
-    if(!(joystick & (1 << PB2))){
+    if(!(joystick & (1 << PB0))){
         return 'R';
     }
 
     // Center button
-    if(!(joystick & (1 << PB0))){
+    if(!(joystick & (1 << PB4))){
         return 'S';
     }
 
