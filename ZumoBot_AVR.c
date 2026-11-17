@@ -62,9 +62,9 @@ char readJoystick(){
         return 'R';
     }
 
-    // Center button
+    // Center button - change speed
     if(!(joystick & (1 << PB4))){
-        return 'S';
+        return 'V';
     }
 
     // No direction pressed

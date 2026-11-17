@@ -39,6 +39,9 @@ ZumoReflectanceSensorArray sensors(QTR_NO_EMITTER_PIN);
 unsigned int sensor_values[NUM_SENSORS];
 unsigned char incomingByte;
 
+int speedMode = 0;
+int currentSpeed = 200;
+
 // Stores the current movement command
 char currentCommand = 'S';
 
@@ -68,8 +71,28 @@ void readBluetooth(){
         currentCommand = 'S';
         break;
 
-      default:
+      case 'V':
+        speedMode++;
+
+        if(speedMode > 2){
+          speedMode = 0;
+        }
+
+        if(speedMode == 0){
+          currentSpeed = 200;
+          Serial.println("Slow Speed");
+        }
+        else if(speedMode == 1){
+          currentSpeed = 275;
+          Serial.println("Medium Speed");
+        }
+        else{
+          currentSpeed = 350;
+          Serial.println("Fast Speed");
+        }
         break;
+
+      default: break;
     }
 
     // Display the received command for debugging
@@ -125,19 +148,19 @@ bool checkBoundary(){
 void moveRobot(){
   switch(currentCommand){
     case 'F':
-      motors.setSpeeds(FORWARD_SPEED, FORWARD_SPEED);
+      motors.setSpeeds(currentSpeed, currentSpeed);
       break;
 
     case 'B':
-      motors.setSpeeds(-REVERSE_SPEED, -REVERSE_SPEED);
+      motors.setSpeeds(-currentSpeed, -currentSpeed);
       break;
 
     case 'L':
-      motors.setSpeeds(-TURN_SPEED, TURN_SPEED);
+      motors.setSpeeds(-currentSpeed, currentSpeed);
       break;
 
     case 'R':
-      motors.setSpeeds(TURN_SPEED, -TURN_SPEED);
+      motors.setSpeeds(currentSpeed, -currentSpeed);
       break;
 
     case 'S':
